@@ -1,48 +1,42 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
+import './App.css'
 
-type FormElement = React.FormEvent<HTMLFormElement>;
-
-interface ITodo {
+interface Todo {
   text: string;
   complete: boolean;
 }
 
-//JSX.Element: TS custom definition
 function App(): JSX.Element {
   const [value, setValue] = useState<string>('');
-  const [todos, setTodos] = useState<ITodo[]>([]);
-  // debugger;
+  const [todos, setTodos] = useState<Todo[]>([]);
 
-  const handleSubmit = (e: FormElement): void => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     addTodo(value);
     setValue('');
   };
 
-  const addTodo = (text: string): void => {
-    const newTodos: ITodo[] = [...todos, { text, complete: false }];
+  const addTodo = (text: string) => {
+    const newTodos: Todo[] = [...todos, { text, complete: false }];
     setTodos(newTodos);
   };
-  console.log(todos);
 
-  const completeTodo = (index: number): void => {
-    const newTodos: ITodo[] = [...todos];
-    // switch complete state
+  const completeTodo = (index: number) => {
+    const newTodos: Todo[] = [...todos];
     newTodos[index].complete = !newTodos[index].complete;
     setTodos(newTodos);
   };
 
-  const deleteTodo = (index: number): void => {
-    const newTodos: ITodo[] = [...todos];
+  const deleteTodo = (index: number) => {
+    const newTodos: Todo[] = [...todos];
     newTodos.splice(index, 1);
-    // newTodos = todos.filter((todo: ITodo) => todo !== newTodos[index]); This also work but must `let newTodos`
     setTodos(newTodos);
   };
 
   return (
-    <Fragment>
+    <div>
       <h1>Todo List</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={e => handleSubmit(e)}>
         <input
           type='text'
           value={value}
@@ -52,25 +46,23 @@ function App(): JSX.Element {
         <button type='submit'>Add Todo</button>
       </form>
       <section>
-        {todos.map((todo: ITodo, index: number) => {
+        {todos.map((todo: Todo, index: number) => {
           return (
-            <Fragment key={index}>
-              <div
-                style={{ textDecoration: todo.complete ? 'line-through' : '' }}
-              >
+            <div key={`todo-${index}`}>
+              <div className={todo.complete ? 'completed' : ''}>
                 {todo.text}
               </div>
-              <button type='button' onClick={(): void => completeTodo(index)}>
+              <button type='button' onClick={() => completeTodo(index)}>
                 {todo.complete ? 'Incomplete' : 'Complete'}
               </button>
-              <button type='button' onClick={(): void => deleteTodo(index)}>
+              <button type='button' onClick={() => deleteTodo(index)}>
                 &times;
               </button>
-            </Fragment>
+            </div>
           );
         })}
       </section>
-    </Fragment>
+    </div>
   );
 }
 export default App;
