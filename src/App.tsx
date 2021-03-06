@@ -42,26 +42,29 @@ function App(): JSX.Element {
           value={value}
           onChange={e => setValue(e.target.value)}
           required
+          id="todo-input"
         />
-        <button type='submit'>Add Todo</button>
+        <button id='todo-add' type='submit'>Add Todo</button>
       </form>
-      <section>
+      <div id='todos-container'>
         {todos.map((todo: Todo, index: number) => {
+          const id = `todo-${index}`
+
           return (
-            <div key={`todo-${index}`}>
-              <div className={todo.complete ? 'completed' : ''}>
+            <div key={id} id={id} className={todo.complete ? 'complete' : 'incomplete'}>
+              <div>
                 {todo.text}
               </div>
-              <button type='button' onClick={() => completeTodo(index)}>
+              <button className="toggle-complete" type='button' onClick={() => completeTodo(index)}>
                 {todo.complete ? 'Incomplete' : 'Complete'}
               </button>
-              <button type='button' onClick={() => deleteTodo(index)}>
+              <button className="delete" type='button' onClick={() => deleteTodo(index)}>
                 &times;
               </button>
             </div>
           );
         })}
-      </section>
+      </div>
     </div>
   );
 }
