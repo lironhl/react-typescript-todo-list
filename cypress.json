@@ -1,4 +1,6 @@
 {
+    "projectId": "todo",
     "baseUrl": "http://localhost:3000",
-    "experimentalStudio": true
+    "experimentalStudio": true,
+    "video": true
 }

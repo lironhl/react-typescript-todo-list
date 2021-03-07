@@ -9,8 +9,8 @@ describe('Todo', () => {
         cy.get('#todo-input').type('Learn Typescript')
         cy.get('#todo-add').click()
 
-        cy.get('#todos-container').children().should('have.length', 1)
-        cy.get('#todos-container').contains('Learn Typescript')
+        cy.get('#todos-list').children().should('have.length', 1)
+        cy.get('#todos-list').contains('Learn Typescript')
     })
 
     it("Mark Todo as Completed", () => {
@@ -23,6 +23,6 @@ describe('Todo', () => {
 
     it("Delete Todo", () => {
         cy.get("#todo-0 .delete").click()
-        cy.get('#todos-container').children().should('have.length', 0)
+        cy.get('#todos-list').children().should('have.length', 0)
     })
 })

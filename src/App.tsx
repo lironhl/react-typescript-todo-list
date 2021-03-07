@@ -46,7 +46,7 @@ function App(): JSX.Element {
         />
         <button id='todo-add' type='submit'>Add Todo</button>
       </form>
-      <div id='todos-container'>
+      <div id='todos-list'>
         {todos.map((todo: Todo, index: number) => {
           const id = `todo-${index}`
 
