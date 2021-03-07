@@ -33,9 +33,18 @@ function App(): JSX.Element {
     setTodos(newTodos);
   };
 
+  const generateTodos = async () => {
+    const todosResponse = await fetch('https://localhost:5000/todos/generate')
+    if (todosResponse.ok) {
+      const newTodos: Todo[] = await todosResponse.json()
+      setTodos(newTodos)
+    }
+  }
+
   return (
     <div>
       <h1>Todo List</h1>
+      <button id="todo-generate" onClick={generateTodos}>Generate Todos</button>
       <form onSubmit={e => handleSubmit(e)}>
         <input
           type='text'

@@ -25,4 +25,11 @@ describe('Todo', () => {
         cy.get("#todo-0 .delete").click()
         cy.get('#todos-list').children().should('have.length', 0)
     })
+
+    it("Generate Todos", () => {
+        cy.intercept('https://localhost:5000/todos/generate', [{ text: 'my-todo', complete: false }])
+        
+        cy.get("#todo-generate").click()
+        cy.get('#todo-0').contains('my-todo')
+    })
 })
