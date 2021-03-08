@@ -43,36 +43,46 @@ function App(): JSX.Element {
 
   return (
     <div>
-      <h1>Todo List</h1>
-      <button id="todo-generate" onClick={generateTodos}>Generate Todos</button>
-      <form onSubmit={e => handleSubmit(e)}>
-        <input
-          type='text'
-          value={value}
-          onChange={e => setValue(e.target.value)}
-          required
-          id="todo-input"
-        />
-        <button id='todo-add' type='submit'>Add Todo</button>
-      </form>
-      <div id='todos-list'>
-        {todos.map((todo: Todo, index: number) => {
-          const id = `todo-${index}`
+      <div className='center'>
+        <h1>Todo List</h1>
+      </div>
+      <div className='d-flex justify-content-evenly p-1'>
+        <div>
+          <form onSubmit={e => handleSubmit(e)}>
+            <input
+              type='text'
+              value={value}
+              onChange={e => setValue(e.target.value)}
+              required
+              id="todo-input"
+            />
+            <button id='todo-add' type='submit'>Add Todo</button>
+          </form>
+          <div id='todos-list'>
+            {todos.map((todo: Todo, index: number) => {
+              const id = `todo-${index}`
 
-          return (
-            <div key={id} id={id} className={todo.complete ? 'complete' : 'incomplete'}>
-              <div>
-                {todo.text}
-              </div>
-              <button className="toggle-complete" type='button' onClick={() => completeTodo(index)}>
-                {todo.complete ? 'Incomplete' : 'Complete'}
-              </button>
-              <button className="delete" type='button' onClick={() => deleteTodo(index)}>
-                &times;
-              </button>
-            </div>
-          );
-        })}
+              return (
+                <div key={id} id={id} className={`todo-item ${todo.complete ? 'complete' : 'incomplete'}`}>
+                  <div className='center p-1'>
+                    {todo.text}
+                  </div>
+                  <div className='d-flex justify-content-evenly'>
+                    <button className="toggle-complete" type='button' onClick={() => completeTodo(index)}>
+                      {todo.complete ? 'Incomplete' : 'Complete'}
+                    </button>
+                    <button className="delete" type='button' onClick={() => deleteTodo(index)}>
+                      &times;
+                  </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div>
+          <button id="todo-generate" onClick={generateTodos}>Generate Todos</button>
+        </div>
       </div>
     </div>
   );
